@@ -29,10 +29,15 @@ pool.getConnection((err, connection) => {
   return;
 });
 
-pool.on("acquire", function (connection) {
-  console.log("Connection %d acquired", connection.threadId);
-});
 
 const JWT_SECRET = "GUNAPRANITHREDDYCHEELAM";
 
-module.exports = { pool, JWT_SECRET };
+const closePool = () =>
+  new Promise((resolve, reject) => {
+    pool.end((err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+
+module.exports = { pool, JWT_SECRET, closePool };
