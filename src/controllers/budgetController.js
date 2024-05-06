@@ -12,10 +12,10 @@ exports.getUserBudgets = async (req, res) => {
 
 exports.createBudget = async (req, res) => {
   try {
-    const { name, cost, month, color } = req.body;
+    const { name, cost, month, colour } = req.body;
     const userId = req.user.id;
 
-    const budgetId = await Budget.create(userId, name, cost, month, color);
+    const budgetId = await Budget.create(userId, name, cost, month, colour);
     res.status(201).json({ message: "Budget created successfully", budgetId });
   } catch (error) {
     console.error("Failed to create budget:", error);

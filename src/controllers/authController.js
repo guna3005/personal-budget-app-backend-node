@@ -41,14 +41,13 @@ exports.login = async (req, res) => {
 };
 
 exports.refreshToken = async (req, res) => {
-  const { token } = req.body;
+  const { token } = req;
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     const newToken = jwt.sign({ id: decoded.id }, JWT_SECRET, {
       expiresIn: "60s",
     });
 
-    // Update the token in the database
     const updateTokenQuery = "UPDATE tokens SET token = ? WHERE token = ?";
     await pool.query(updateTokenQuery, [newToken, token]);
 

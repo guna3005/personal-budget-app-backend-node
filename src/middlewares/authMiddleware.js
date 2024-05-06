@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/dbPool");
+const { request } = require("express");
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -11,6 +12,7 @@ const authenticateToken = (req, res, next) => {
     if (err) return res.status(403).send("Invalid token");
 
     req.user = decoded;
+    request.token = token;
     next();
   });
 };
